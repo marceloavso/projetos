@@ -16,11 +16,19 @@
 
     <div class="mb-4">
       <label for="selectMonth" class="block text-sm font-medium text-gray-700">Selecione o Mês:</label>
-      <select id="selectMonth" class="mt-1 p-2 border rounded" onchange="trocarMes()">
+      <select id="selectMonth" class="mt-1 p-2 border rounded">
         <option value="1">Janeiro</option>
         <option value="2">Fevereiro</option>
         <option value="3">Março</option>
-        <!-- Adicione os demais meses conforme necessário -->
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
       </select>
     </div>
 
@@ -45,12 +53,7 @@
   </div>
 
   <script>
-    const meses = {
-      1: [],
-      2: [],
-      3: [],
-      // Adicione os demais meses conforme necessário
-    };
+    const pagamentosPorMes = JSON.parse(localStorage.getItem("pagamentosPorMes")) || {};
 
     function adicionarPagamento() {
       const nome = prompt("Digite o nome:");
@@ -61,45 +64,75 @@
         return;
       }
 
-      const selectedMonth = document.getElementById("selectMonth").value;
-      meses[selectedMonth].push({ nome, valorPago });
-
-      atualizarTabela();
-    }
-
-    function removerPagamento(index) {
-      const selectedMonth = document.getElementById("selectMonth").value;
-      meses[selectedMonth].splice(index, 1);
-      
-      atualizarTabela();
-    }
-
-    function atualizarTabela() {
-      const selectedMonth = document.getElementById("selectMonth").value;
-      const tableBody = document.getElementById("paymentTable").getElementsByTagName('tbody')[0];
-      tableBody.innerHTML = "";
-
-      meses[selectedMonth].forEach((pagamento, index) => {
-        const newRow = tableBody.insertRow(tableBody.rows.length);
-
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        const cell3 = newRow.insertCell(2);
-
-        cell1.innerHTML = pagamento.nome;
-        cell2.innerHTML = pagamento.valorPago.toFixed(2);
-        cell3.innerHTML = `<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="removerPagamento(${index})">Remover</button>`;
-      });
-    }
-
-    function trocarMes() {
-      atualizarTabela();
       const selectMonth = document.getElementById("selectMonth");
       const selectedMonth = selectMonth.value;
 
+      pagamentosPorMes[selectedMonth] = pagamentosPorMes[selectedMonth] || [];
+      pagamentosPorMes[selectedMonth].push({ nome, valorPago });
+
+      // Atualiza a tabela e salva os dados localmente
+      atualizarTabela(selectedMonth);
+      salvarDadosLocalmente();
+    }
+
+    function removerPagamento(button, selectedMonth) {
+      const row = button.parentNode.parentNode;
+      const rowIndex = row.rowIndex;
+
+      pagamentosPorMes[selectedMonth].splice(rowIndex - 1, 1);
+
+      // Remove a linha da tabela
+      row.parentNode.removeChild(row);
+
+      // Atualiza os dados localmente
+      salvarDadosLocalmente();
+    }
+
+    function atualizarTabela(selectedMonth) {
+      const tableBody = document.getElementById("paymentTable").getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = "";
+
+      if (pagamentosPorMes[selectedMonth]) {
+        pagamentosPorMes[selectedMonth].forEach((pagamento, index) => {
+          const newRow = tableBody.insertRow(index);
+          const cell1 = newRow.insertCell(0);
+          const cell2 = newRow.insertCell(1);
+          const cell3 = newRow.insertCell(2);
+
+          cell1.innerHTML = pagamento.nome;
+          cell2.innerHTML = pagamento.valorPago.toFixed(2);
+          cell3.innerHTML = `<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="removerPagamento(this, ${selectedMonth})">Remover</button>`;
+        });
+      }
+    }
+
+    function trocarMes() {
+      const selectMonth = document.getElementById("selectMonth");
+      const selectedMonth = selectMonth.value;
+
+      // Atualiza a tabela para o novo mês
+      atualizarTabela(selectedMonth);
       alert(`Mês alterado para ${selectMonth.options[selectMonth.selectedIndex].text}`);
     }
+
+    function salvarDadosLocalmente() {
+      localStorage.setItem("pagamentosPorMes", JSON.stringify(pagamentosPorMes));
+    }
+
+    // Carrega as informações ao carregar a página
+    document.addEventListener("DOMContentLoaded", () => {
+      const selectMonth = document.getElementById("selectMonth");
+      const selectedMonth = selectMonth.value;
+
+      atualizarTabela(selectedMonth);
+    });
   </script>
+
+  <div class="mt-4">
+    <button onclick="trocarMes()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Trocar Mês
+    </button>
+  </div>
 
 </body>
 </html>
