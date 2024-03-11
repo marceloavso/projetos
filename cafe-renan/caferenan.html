@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Controle de Pagamentos</title>
+  <style>
+    /* Estilos adicionais podem ser adicionados aqui */
+  </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="container mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Controle de Pagamentos - Rateio para Compra de Lanches</h1>
+
+    <div class="mb-4">
+      <label for="selectMonth" class="block text-sm font-medium text-gray-700">Selecione o Mês:</label>
+      <select id="selectMonth" class="mt-1 p-2 border rounded">
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <!-- Adicione os demais meses conforme necessário -->
+      </select>
+    </div>
+
+    <table id="paymentTable" class="min-w-full border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 py-2 px-4">Nome</th>
+          <th class="border border-gray-300 py-2 px-4">Valor Pago (R$)</th>
+          <th class="border border-gray-300 py-2 px-4">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+      </tbody>
+    </table>
+
+    <div class="mt-4">
+      <button onclick="adicionarPagamento()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Adicionar Pagamento
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function adicionarPagamento() {
+      const nome = prompt("Digite o nome:");
+      const valorPago = parseFloat(prompt("Digite o valor pago (R$):"));
+
+      if (!nome || isNaN(valorPago)) {
+        alert("Por favor, preencha as informações corretamente.");
+        return;
+      }
+
+      const tableBody = document.getElementById("paymentTable").getElementsByTagName('tbody')[0];
+      const newRow = tableBody.insertRow(tableBody.rows.length);
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+
+      cell1.innerHTML = nome;
+      cell2.innerHTML = valorPago.toFixed(2);
+      cell3.innerHTML = `<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="removerPagamento(this)">Remover</button>`;
+    }
+
+    function removerPagamento(button) {
+      const row = button.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+
+    function trocarMes() {
+      const selectMonth = document.getElementById("selectMonth");
+      const selectedMonth = selectMonth.value;
+
+      // Limpa a tabela
+      const tableBody = document.getElementById("paymentTable").getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = "";
+
+      alert(`Mês alterado para ${selectMonth.options[selectMonth.selectedIndex].text}`);
+    }
+  </script>
+
+  <div class="mt-4">
+    <button onclick="trocarMes()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Trocar Mês
+    </button>
+  </div>
+
+</body>
+</html>
