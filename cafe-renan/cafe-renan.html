@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <title>Controle de Pagamentos</title>
+  <title>Café do Renan</title>
   <style>
     /* Estilos adicionais podem ser adicionados aqui */
   </style>
@@ -12,11 +13,11 @@
 <body class="bg-gray-100 p-8">
 
   <div class="container mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-bold mb-4">Controle de Pagamentos - Rateio para Compra de Lanches</h1>
+    <h1 class="text-2xl font-bold mb-4">Controle de Pagamentos - Café do Renan</h1>
 
     <div class="mb-4">
       <label for="selectMonth" class="block text-sm font-medium text-gray-700">Selecione o Mês:</label>
-      <select id="selectMonth" class="mt-1 p-2 border rounded">
+      <select id="selectMonth" class="mt-1 p-2 border rounded" onchange="trocarMes()">
         <option value="1">Janeiro</option>
         <option value="2">Fevereiro</option>
         <option value="3">Março</option>
@@ -127,12 +128,6 @@
       atualizarTabela(selectedMonth);
     });
   </script>
-
-  <div class="mt-4">
-    <button onclick="trocarMes()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-      Trocar Mês
-    </button>
-  </div>
 
 </body>
 </html>
