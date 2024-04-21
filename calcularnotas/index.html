@@ -16,7 +16,7 @@
         <label for="peso" class="block text-gray-700 text-sm font-bold mb-2">Peso:</label>
         <input type="text" id="peso" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <div class="mt-2 flex items-center">
-          <input type="checkbox" class="form-checkbox" id="manterPeso" onclick="bloquear(this)">
+          <input type="checkbox" class="form-checkbox" id="manterPeso" onchange="bloquear(this)">
           <label for="manterPeso" class="ml-2 block text-sm text-gray-900">Manter</label>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <label for="nQuestoes" class="block text-gray-700 text-sm font-bold mb-2">Nº Questões:</label>
         <input type="text" id="nQuestoes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <div class="mt-2 flex items-center">
-          <input type="checkbox" class="form-checkbox" id="manterQuestoes" onclick="bloquear(this)">
+          <input type="checkbox" class="form-checkbox" id="manterQuestoes" onchange="bloquear(this)">
           <label for="manterQuestoes" class="ml-2 block text-sm text-gray-900">Manter</label>
         </div>
       </div>
@@ -33,10 +33,6 @@
       <div class="mb-4">
         <label for="nAcertos" class="block text-gray-700 text-sm font-bold mb-2">Nº Acertos:</label>
         <input type="text" id="nAcertos" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onchange="calcular(this)">
-        <div class="mt-2 flex items-center">
-          <input type="checkbox" class="form-checkbox" id="manterAcertos" onclick="bloquear(this)">
-          <label for="manterAcertos" class="ml-2 block text-sm text-gray-900">Manter</label>
-        </div>
       </div>
 
       <div class="mb-4">
@@ -48,7 +44,6 @@
     </div>
   </div>
 
-  <!-- Seu script aqui -->
 </body>
 
   
