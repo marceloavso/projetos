@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PPCN</title>
+  <!-- Adicione o link do CSS do Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex justify-center items-center h-screen">
+    <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+      <h1 class="text-center text-2xl font-bold mb-6">Calculadora de Notas</h1>
+      <div class="mb-4">
+        <label for="peso" class="block text-gray-700 text-sm font-bold mb-2">Peso:</label>
+        <input type="text" id="peso" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <div class="mt-2 flex items-center">
+          <input type="checkbox" class="form-checkbox" id="manterPeso" onclick="bloquear(this)">
+          <label for="manterPeso" class="ml-2 block text-sm text-gray-900">Manter</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="nQuestoes" class="block text-gray-700 text-sm font-bold mb-2">Nº Questões:</label>
+        <input type="text" id="nQuestoes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <div class="mt-2 flex items-center">
+          <input type="checkbox" class="form-checkbox" id="manterQuestoes" onclick="bloquear(this)">
+          <label for="manterQuestoes" class="ml-2 block text-sm text-gray-900">Manter</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="nAcertos" class="block text-gray-700 text-sm font-bold mb-2">Nº Acertos:</label>
+        <input type="text" id="nAcertos" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onchange="calcular(this)">
+        <div class="mt-2 flex items-center">
+          <input type="checkbox" class="form-checkbox" id="manterAcertos" onclick="bloquear(this)">
+          <label for="manterAcertos" class="ml-2 block text-sm text-gray-900">Manter</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Nota:</label>
+        <div id="resultado" class="p-2 bg-blue-100 text-blue-800 rounded"></div>
+      </div>
+
+      <button type="reset" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Resetar Avaliação</button>
+    </div>
+  </div>
+
+  <!-- Seu script aqui -->
+</body>
+
+  
+  <script>
+
+    function bloquear(cbox){
+     if (cbox.parentElement.previousElementSibling.disabled == true){
+       cbox.parentElement.previousElementSibling.disabled = false;
+       cbox.parentElement.previousElementSibling.style.backgroundColor = 'transparent';
+       
+     }
+     else{
+       cbox.parentElement.previousElementSibling.disabled = true;
+       cbox.parentElement.previousElementSibling.style.backgroundColor = '#ddd';
+     }
+    }
+
+    function calcular(acertos){
+      let peso = document.getElementById("peso").value;
+      let nQuestoes = document.getElementById("nQuestoes").value;
+      let nAcertos = acertos.value;
+      let resultado = document.getElementById("resultado");
+
+      resultado.innerText = (nAcertos*nQuestoes)/peso;
+
+
+      if(resultado.innerText >= 6){
+        resultado.style.color = "blue";
+      }
+      else{
+        resultado.style.color = "red";
+      }
+    }
+
+  </script>
+  
+</html>
