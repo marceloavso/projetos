@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background: #6e28d9;
+        padding: 0 24px;
+        margin: 0;
+        height: 100vh;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        display: block;
+      }
+
+
+      textarea {
+        display: block;
+        height: 60vh;
+        width: 30vw;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+	
+    <textarea id="notas" placeholder="Cole o sócio formativo aqui: "></textarea>
+    <button onclick="mostrar()">Vai</button>
+    <textarea id="resultado" placeholder="Copie o script que aparecer aqui." readonly></textarea>
+    <script>
+      function mostrar() {
+        var notas =  document.getElementById('notas').value;
+        notas = notas.replace(/\n/g, ' ');
+        console.log(notas);
+        string = `var notasSocio = \'${notas}\';\nnotasSocio = notasSocio.replace(/,/g, '.');\nvar vetorNotasSocio = notasSocio.split(' ');\nvar camposNotas = document.getElementsByName('inputNotaPpr');\nfor (let i=0; i<camposNotas.length;i++){\n   camposNotas[i].value = vetorNotasSocio[i];\n}\n`;
+        document.getElementById('resultado').value = string;
+      }
+
+    </script>
+  </body>
+
+</html>
