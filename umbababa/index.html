@@ -20,11 +20,8 @@
       #contador{
         color: black;
         font-size: 10rem;
-        text-shadow: 
-          	3px 3px 0 #fff,
-    		-3px 3px 0 #fff,
-    		-3px -3px 0 #fff,
-    		3px -3px 0 #fff;
+        text-shadow: 3px 3px 0 #fff, -3px 3px 0 #fff, -3px -3px 0 #fff, 3px -3px 0 #fff;
+	user-select: none;
       }
       
       #botao{
@@ -36,35 +33,33 @@
         text-align: center;
 		line-height: 3;
         background-color: white;
-        color: black
+        color: black;
+
 
       }
-      #botao::hover{
-       background-color: #ddd;
-       color: black;
+      #botao:hover{
+       background-color: #000;
+       color: white;
       }
+
 
     </style>
   </head>
 
   <body>
-
-	<span id="contador"></span>    
+	<span id="contador"></span>    	
 	
-	
-    
-    <button id="botao" onclick="clicar()">Click</button>
-    
-    <script>
-      function clicar() {
-        var somar =  document.getElementById('contador');
-        var clique = somar.innerText;
-        if (clique == '') {
-          clique = 0;
-        }
-        clique = parseInt(clique) + 1;
-        somar.innerText = clique;
-      }
+    	<button id="botao" onclick="clicar()">Click</button>
+    	<script>
+		function clicar() {
+			var somar =  document.getElementById('contador');
+			var clique = somar.innerText;
+			if (clique == '') {
+				clique = 0;
+			}
+			clique = parseInt(clique) + 1;
+			somar.innerText = clique;
+		}
 
     </script>
   </body>
