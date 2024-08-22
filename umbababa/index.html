@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background: #ddd;
+        padding: 0 24px;
+        margin: 0;
+        height: 100vh;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column
+      }
+      
+      #contador{
+        color: black;
+        font-size: 10rem;
+        text-shadow: 
+          	3px 3px 0 #fff,
+    		-3px 3px 0 #fff,
+    		-3px -3px 0 #fff,
+    		3px -3px 0 #fff;
+      }
+      
+      #botao{
+        display: block;
+        border: black solid 1.5px;
+        border-radius: 10px;
+        width: 100px;
+        height: 50px;
+        text-align: center;
+		line-height: 3;
+        background-color: white;
+        color: black
+
+      }
+      #botao::hover{
+       background-color: #ddd;
+       color: black;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+	<span id="contador"></span>    
+	
+	
+    
+    <button id="botao" onclick="clicar()">Click</button>
+    
+    <script>
+      function clicar() {
+        var somar =  document.getElementById('contador');
+        var clique = somar.innerText;
+        if (clique == '') {
+          clique = 0;
+        }
+        clique = parseInt(clique) + 1;
+        somar.innerText = clique;
+      }
+
+    </script>
+  </body>
+
+</html>
