@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Produto</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 25%);
+      gap: 10px;
+    }
+    .keypad button {
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+    .navbar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 200px;
+      background-color: #f8f9fa;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .container {
+      margin-left: 220px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <h2 class="title is-4">Produtos Adicionados</h2>
+    <ul id="product-list"></ul>
+  </nav>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Cadastro de Produto</h1>
+      <form id="product-form">
+        <div class="field">
+          <label class="label">Nome do Produto</label>
+          <div class="control">
+            <input class="input" type="text" id="product-name" placeholder="Digite o nome do produto">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Preço</label>
+          <div class="control">
+            <input class="input" type="text" step="0.01" id="product-price" placeholder="Digite o preço">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Caixa Registradora</label>
+          <div class="keypad">
+            <button type="button">7</button>
+            <button type="button">8</button>
+            <button type="button">9</button>
+            <button type="button">4</button>
+            <button type="button">5</button>
+            <button type="button">6</button>
+            <button type="button">1</button>
+            <button type="button">2</button>
+            <button type="button">3</button>
+            <button type="button">&lt-</button>
+            <button type="button">0</button>
+            <button type="button">.</button>
+            <button class="button is-primary" type="submit" style="grid-column: span 3;">Enter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script>
+    var form = document.getElementById('product-form');
+    var productList = document.getElementById('product-list');
+    
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      
+      var productName = document.getElementById('product-name').value;
+      var productPrice = document.getElementById('product-price').value;
+      
+      if (productName && productPrice) {
+        var listItem = document.createElement('li');
+        listItem.textContent = `${productName} - $${productPrice}`;
+        productList.appendChild(listItem);
+        
+        document.getElementById('product-name').value = '';
+        document.getElementById('product-price').value = '';
+      } else {
+        alert('Por favor, preencha todos os campos.');
+      }
+    });
+
+    document.querySelectorAll('.keypad button').forEach(button => {
+      button.addEventListener('click', () => {
+        var inputPreco = document.getElementById('product-price');
+        if (button.textContent === 'Enter') {
+          return;
+        } else if(button.textContent === '<-'){
+          inputPreco.value = inputPreco.value.substr(0, inputPreco.value.length-1);
+        } else {
+          inputPreco.value += button.textContent;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
