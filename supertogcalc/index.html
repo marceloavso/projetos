@@ -20,7 +20,7 @@
       left: 0;
       top: 0;
       height: 100%;
-      width: 200px;
+      width: 11em;
       background-color: #f8f9fa;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
       padding: 20px;
@@ -29,10 +29,13 @@
     .container {
       margin-left: 220px;
     }
+    ul{
+      display: block
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar">
+  <nav class="navbar is-flex-direction-column">
     <h2 class="title is-4">Produtos Adicionados</h2>
     <ul id="product-list"></ul>
   </nav>
@@ -47,9 +50,21 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Preço</label>
+          <label class="label">Quantidade</label>
           <div class="control">
-            <input class="input" type="text" step="0.01" id="product-price" placeholder="Digite o preço">
+            <input class="input" type="text" id="product-quant" placeholder="Digite a quantidade do produto">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Preço de Compra</label>
+          <div class="control">
+            <input class="input" type="text" id="product-buy" placeholder="Digite o valor de compra do produto">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Preço de Venda</label>
+          <div class="control">
+            <input class="input" type="text" step="0.01" id="product-sell" placeholder="Digite o valor de venda do produto">
           </div>
         </div>
         <div class="field">
@@ -81,15 +96,20 @@
       event.preventDefault();
       
       var productName = document.getElementById('product-name').value;
-      var productPrice = document.getElementById('product-price').value;
+      var productSell = document.getElementById('product-sell').value;
+      var productQuant = document.getElementById('product-quant').value;
+      var productBuy = document.getElementById('product-buy').value;
       
-      if (productName && productPrice) {
+      if (productName && productSell && productQuant && productBuy) {
         var listItem = document.createElement('li');
-        listItem.textContent = `${productName} - $${productPrice}`;
+        listItem.setAttribute("class","is-clickable");
+        listItem.textContent = `${productName} - $${productSell}`;
         productList.appendChild(listItem);
         
         document.getElementById('product-name').value = '';
-        document.getElementById('product-price').value = '';
+        document.getElementById('product-sell').value = '';
+        document.getElementById('product-quant').value = '';
+        document.getElementById('product-buy').value = '';
       } else {
         alert('Por favor, preencha todos os campos.');
       }
@@ -97,7 +117,7 @@
 
     document.querySelectorAll('.keypad button').forEach(button => {
       button.addEventListener('click', () => {
-        var inputPreco = document.getElementById('product-price');
+        var inputPreco = document.getElementById('product-sell');
         if (button.textContent === 'Enter') {
           return;
         } else if(button.textContent === '<-'){
@@ -107,6 +127,7 @@
         }
       });
     });
+    
   </script>
 </body>
 </html>
