@@ -113,7 +113,7 @@
       
       if (productName && productSell && productQuant && productBuy) {
         var listItem = document.createElement('li');
-        let classesToAdd = ["js-modal-trigger"];
+        let classesToAdd = ["is-clickable","js-modal-trigger"];
         listItem.classList.add(...classesToAdd);
         listItem.setAttribute("data-target", "product-info-modal");
         listItem.textContent = `${productName} - $${productSell}`;
