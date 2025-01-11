@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SuperTogCalc</title>
+  <title>Formulário de Produto</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <style>
     .keypad {
@@ -87,10 +87,21 @@
         </div>
       </form>
     </div>
+    <div id="product-info-modal" class="modal">
+      <div class="modal-background"></div>
+  		<div class="modal-content">
+    		<div class="box"></div>
+  		</div>
+  		<button class="modal-close is-large" aria-label="close"></button>
+	</div>
   </section>
+  
+  
+  
   <script>
     var form = document.getElementById('product-form');
     var productList = document.getElementById('product-list');
+    var productHist = [];
     
     form.addEventListener('submit', event => {
       event.preventDefault();
@@ -102,14 +113,22 @@
       
       if (productName && productSell && productQuant && productBuy) {
         var listItem = document.createElement('li');
-        listItem.setAttribute("class","is-clickable");
+        let classesToAdd = ["js-modal-trigger"];
+        listItem.classList.add(...classesToAdd);
+        listItem.setAttribute("data-target", "product-info-modal");
         listItem.textContent = `${productName} - $${productSell}`;
         productList.appendChild(listItem);
+        
+        let productProfit = productSell * productQuant;
+        let item = [productName, productQuant, productBuy, productSell, productProfit];
+        productHist.push(item);
         
         document.getElementById('product-name').value = '';
         document.getElementById('product-sell').value = '';
         document.getElementById('product-quant').value = '';
         document.getElementById('product-buy').value = '';
+        
+        
       } else {
         alert('Por favor, preencha todos os campos.');
       }
@@ -118,12 +137,69 @@
     document.querySelectorAll('.keypad button').forEach(button => {
       button.addEventListener('click', () => {
         var inputPreco = document.getElementById('product-sell');
+        
         if (button.textContent === 'Enter') {
           return;
         } else if(button.textContent === '<-'){
           inputPreco.value = inputPreco.value.substr(0, inputPreco.value.length-1);
         } else {
           inputPreco.value += button.textContent;
+        }
+      });
+    });
+    
+    document.addEventListener('submit', () => {
+      // Functions to open and close a modal
+      function openModal($el) {
+        $el.classList.add('is-active');
+      }
+
+      function closeModal($el) {
+        $el.classList.remove('is-active');
+      }
+
+      function closeAllModals() {
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+          closeModal($modal);
+        });
+      }
+
+      // Add a click event on buttons to open a specific modal
+      (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+        var modal = $trigger.dataset.target;
+        var $target = document.getElementById(modal);
+        $trigger.addEventListener('click', e => {
+          openModal($target);
+          itemIndex = [...$trigger.parentElement.children].indexOf(e.target);
+          let itemName = productHist[itemIndex][0];
+          let itemQuant = productHist[itemIndex][1];
+          let itemPriceBuy = productHist[itemIndex][2];
+          let itemPriceSell = productHist[itemIndex][3];
+          let itemProfit = (itemPriceSell * itemQuant) - itemPriceBuy;
+          let itemProfitPercent = (itemProfit/(itemPriceSell * itemQuant))*100;
+          $target.querySelector(".box").innerHTML = 
+            `<strong>${itemName}</strong><br>
+             Quantidade: ${itemQuant}<br>
+             Preço de Compra: ${itemPriceBuy}<br>
+             Preço de Venda: ${itemPriceSell}<br>
+             Lucro: ${itemProfit}<br>
+             Lucro Percentual: ${itemProfitPercent}`;
+        });
+      });
+
+      // Add a click event on various child elements to close the parent modal
+      (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+        var $target = $close.closest('.modal');
+
+        $close.addEventListener('click', () => {
+          closeModal($target);
+        });
+      });
+
+      // Add a keyboard event to close all modals
+      document.addEventListener('keydown', (event) => {
+        if(event.key === "Escape") {
+          closeAllModals();
         }
       });
     });
